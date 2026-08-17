@@ -1,0 +1,3531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Youth Leaders Arena</title>
+<meta name="description" content="Youth Leaders Arena trains teens and young adults in the skills that make a leader: public speaking, teamwork, decision-making and service — through hands-on sessions, workshops and competitions." />
+<meta name="theme-color" content="#05060f" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Youth Leaders Arena" />
+<meta property="og:description" content="We build young leaders, one session at a time." />
+
+<link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=1emKDm46JE0P8S73RXQp1TqB3loY8PVSz&sz=w1000" />
+
+<!-- Runs before first paint so the page never flashes the wrong theme.
+     Reuses the `yla-theme` key from the previous site, so returning
+     visitors keep the preference they already set. -->
+<script>
+  (function () {
+    var t;
+    try { t = localStorage.getItem("yla-theme"); } catch (e) {}
+    if (t !== "light" && t !== "dark") {
+      t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    }
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   YOUTH LEADERS ARENA — landing page
+
+   Two themes. :root is dark (the design's native state); the
+   [data-theme="light"] block below overrides only the palette —
+   every rule in the file reads from these tokens, so nothing else
+   needs to know which theme is active.
+
+   An inline script in <head> stamps data-theme on <html> before
+   first paint, so there is no flash of the wrong theme.
+   ============================================================ */
+
+:root {
+  /* ---- palette ---- */
+  --bg:            #04050d;
+  --bg-rgb:        6, 8, 18;
+  --ink:           #eef0fb;
+  --ink-rgb:       238, 240, 251;
+  --ink-dim:       #a3abd0;
+  --ink-faint:     #6a7299;
+
+  --cyan:          #22d3ee;   --cyan-rgb:    34, 211, 238;
+  --violet:        #8b5cf6;   --violet-rgb:  139, 92, 246;
+  --magenta:       #f472b6;   --magenta-rgb: 244, 114, 182;
+  --gold:          #fbbf24;
+
+  --line:          rgba(140, 155, 220, 0.14);
+  --line-soft:     rgba(140, 155, 220, 0.08);
+  --glass:         rgba(18, 22, 44, 0.42);
+  --glass-hi:      rgba(30, 36, 70, 0.55);
+
+  /* ---- surfaces ---- */
+  --panel-rgb:     8, 11, 24;
+  --panel-hi:      rgba(22, 26, 54, 0.85);
+  --field-focus:   rgba(14, 18, 40, 0.85);
+  --placeholder:   rgba(140, 150, 190, 0.55);
+  --rail-track:    rgba(255, 255, 255, 0.04);
+  --danger:        #fca5a5;
+  --on-accent:     #06060f;
+
+  --grad-panel:        linear-gradient(150deg, rgba(30, 24, 68, 0.55), rgba(10, 13, 30, 0.55));
+  --grad-panel-strong: linear-gradient(155deg, rgba(28, 22, 66, 0.72), rgba(8, 12, 28, 0.78));
+  --grad-modal:        linear-gradient(155deg, rgba(32, 26, 74, 0.96), rgba(10, 13, 30, 0.97));
+
+  /* ---- effects ---- */
+  --grain-op:      0.035;
+  --cursor-blend:  screen;
+
+  --grad: linear-gradient(100deg, var(--cyan) 0%, var(--violet) 48%, var(--magenta) 100%);
+
+  /* ---- type ---- */
+  --f-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* ---- layout ---- */
+  --wrap: 1180px;
+  --pad: clamp(20px, 5vw, 56px);
+  --r: 18px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   LIGHT THEME
+   Accents are darkened so small text clears WCAG AA on white
+   (cyan 5.4:1, violet 5.4:1, magenta 4.9:1 against --bg).
+   ============================================================ */
+[data-theme="light"] {
+  --bg:            #f5f7fd;
+  --bg-rgb:        245, 247, 253;
+  --ink:           #0d1030;
+  --ink-rgb:       13, 16, 48;
+  --ink-dim:       #4c5480;
+  --ink-faint:     #5f6788;
+
+  --cyan:          #0a7086;   --cyan-rgb:    10, 112, 134;
+  --violet:        #6d3ff0;   --violet-rgb:  109, 63, 240;
+  --magenta:       #c22d8a;   --magenta-rgb: 194, 45, 138;
+  --gold:          #a55207;
+
+  --line:          rgba(30, 44, 110, 0.16);
+  --line-soft:     rgba(30, 44, 110, 0.09);
+  --glass:         rgba(255, 255, 255, 0.66);
+  --glass-hi:      rgba(255, 255, 255, 0.92);
+
+  --panel-rgb:     255, 255, 255;
+  --panel-hi:      rgba(255, 255, 255, 0.98);
+  --field-focus:   #ffffff;
+  --placeholder:   rgba(90, 100, 140, 0.6);
+  --rail-track:    rgba(20, 30, 80, 0.08);
+  --danger:        #b91c1c;
+  --on-accent:     #ffffff;
+
+  --grad-panel:        linear-gradient(150deg, rgba(255, 255, 255, 0.92), rgba(238, 242, 252, 0.86));
+  --grad-panel-strong: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(234, 240, 253, 0.9));
+  --grad-modal:        linear-gradient(155deg, #ffffff, #eef2fc);
+
+  --grain-op:      0.02;
+  --cursor-blend:  multiply;
+}
+
+/* ---------- reset ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+
+::selection { background: var(--violet); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--violet), var(--cyan));
+  border-radius: 99px;
+  border: 3px solid var(--bg);
+}
+
+/* ============================================================
+   PRELOADER
+   ============================================================ */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  transition: opacity 0.7s var(--ease), visibility 0.7s;
+}
+.preloader.is-done { opacity: 0; visibility: hidden; }
+
+.preloader__inner { display: grid; justify-items: center; gap: 22px; }
+
+.pl-path {
+  fill: none;
+  stroke: var(--violet);
+  stroke-width: 3;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: draw 2.1s var(--ease) infinite;
+}
+.pl-path--in { stroke: var(--cyan); animation-delay: 0.25s; }
+@keyframes draw {
+  0%   { stroke-dashoffset: 200; opacity: 0.2; }
+  45%  { stroke-dashoffset: 0;   opacity: 1; }
+  100% { stroke-dashoffset: -200; opacity: 0.2; }
+}
+
+.preloader__bar {
+  width: min(240px, 52vw);
+  height: 2px;
+  background: var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.preloader__bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--grad);
+  transition: width 0.28s var(--ease);
+}
+.preloader__label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--ink-faint);
+}
+.preloader__label em { font-style: normal; color: var(--cyan); }
+
+/* ============================================================
+   BACKGROUND LAYERS
+   ============================================================ */
+.scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  touch-action: pan-y;
+}
+
+/* Keeps text legible over the brightest parts of the nebula. */
+.scene-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 50% 0%, transparent 40%, rgba(var(--bg-rgb), 0.55) 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(var(--bg-rgb), 0.25) 45%, rgba(var(--bg-rgb), 0.75) 100%);
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--grain-op);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(6) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -4%); }
+  60% { transform: translate(-3%, -3%); }
+  80% { transform: translate(4%, 2%); }
+}
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 150;
+  pointer-events: none;
+  mix-blend-mode: var(--cursor-blend);
+  will-change: transform;
+}
+.cursor span {
+  display: block;
+  width: 26px; height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--violet-rgb), 0.85);
+  background: radial-gradient(circle, rgba(var(--cyan-rgb), 0.22), transparent 70%);
+  transition: transform 0.25s var(--ease), border-color 0.25s, background 0.25s;
+}
+.cursor.is-hot span {
+  transform: scale(2.1);
+  border-color: rgba(var(--cyan-rgb), 0.95);
+  background: radial-gradient(circle, rgba(var(--magenta-rgb), 0.28), transparent 70%);
+}
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* ============================================================
+   SCROLL RAIL
+   ============================================================ */
+.scroll-rail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 120;
+  background: var(--rail-track);
+}
+.scroll-rail i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--grad);
+  box-shadow: 0 0 12px rgba(var(--violet-rgb), 0.8);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px var(--pad);
+  transition: background 0.4s var(--ease), backdrop-filter 0.4s, border-color 0.4s, padding 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.nav.is-stuck {
+  padding-block: 12px;
+  background: rgba(var(--bg-rgb), 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom-color: var(--line-soft);
+}
+
+.nav__brand { display: flex; align-items: center; gap: 11px; }
+.nav__logo { width: 32px; height: 32px; filter: drop-shadow(0 0 10px rgba(var(--violet-rgb), 0.55)); }
+.nav__name {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.nav__name b { font-weight: 800; }
+
+.nav__links {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+/* Needs to outrank .btn's own display, which is declared later. */
+.nav__links a.nav__cta-mobile { display: none; }
+.nav__links a {
+  position: relative;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-dim);
+  border-radius: 99px;
+  transition: color 0.25s;
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 14px; right: 14px; bottom: 4px;
+  height: 1px;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.nav__links a:hover { color: var(--ink); }
+.nav__links a:hover::after,
+.nav__links a.is-active::after { transform: scaleX(1); }
+.nav__links a.is-active { color: var(--ink); }
+
+/* ---------- theme toggle ---------- */
+.theme-toggle {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  color: var(--ink);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+}
+.theme-toggle:hover {
+  background: var(--glass-hi);
+  border-color: rgba(var(--violet-rgb), 0.5);
+  transform: translateY(-2px);
+}
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  width: 18px; height: 18px;
+  transition: opacity 0.35s var(--ease), transform 0.45s var(--ease);
+}
+/* Dark theme shows the sun (the thing you'd switch to), light shows the moon. */
+.theme-toggle .ic--moon { opacity: 0; transform: rotate(-70deg) scale(0.5); }
+.theme-toggle .ic--sun  { opacity: 1; transform: none; }
+[data-theme="light"] .theme-toggle .ic--moon { opacity: 1; transform: none; }
+[data-theme="light"] .theme-toggle .ic--sun  { opacity: 0; transform: rotate(70deg) scale(0.5); }
+
+.nav__burger {
+  display: none;
+  width: 42px; height: 42px;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+}
+.nav__burger span {
+  position: absolute;
+  left: 12px;
+  width: 18px; height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease), opacity 0.2s;
+}
+.nav__burger span:nth-child(1) { top: 17px; }
+.nav__burger span:nth-child(2) { top: 23px; }
+.nav__burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+.nav__burger[aria-expanded="true"] span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  --btn-pad: 13px 24px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--btn-pad);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+.btn--sm { --btn-pad: 9px 18px; font-size: 13px; }
+.btn--lg { --btn-pad: 16px 32px; font-size: 15px; }
+
+.btn--primary {
+  color: var(--on-accent);
+  background: var(--grad);
+  background-size: 180% 100%;
+  box-shadow: 0 8px 30px -8px rgba(var(--violet-rgb), 0.75);
+}
+.btn--primary:hover {
+  background-position: 100% 0;
+  box-shadow: 0 14px 44px -10px rgba(var(--cyan-rgb), 0.8);
+}
+
+.btn--ghost {
+  color: var(--ink);
+  background: var(--glass);
+  border-color: var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.btn--ghost:hover {
+  background: var(--glass-hi);
+  border-color: rgba(var(--violet-rgb), 0.5);
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.wrap {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.section {
+  position: relative;
+  z-index: 3;
+  padding-block: clamp(76px, 9vw, 126px);
+}
+
+.sec-head { max-width: 720px; margin-bottom: clamp(48px, 7vw, 86px); }
+.sec-head--center { margin-inline: auto; text-align: center; }
+.sec-head--split {
+  display: grid;
+  gap: 28px;
+  max-width: none;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .sec-head--split { grid-template-columns: 1.1fr 0.9fr; align-items: end; gap: 60px; }
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+h2 { font-size: clamp(2rem, 5.2vw, 3.6rem); }
+h3 { font-size: 1.24rem; letter-spacing: -0.015em; }
+
+.grad {
+  font-style: normal;
+  background: var(--grad);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shift 9s ease-in-out infinite;
+}
+@keyframes shift {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+
+.lede {
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  color: var(--ink-dim);
+  max-width: 60ch;
+  margin-top: 22px;
+}
+.sec-head--center .lede { margin-inline: auto; }
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;   /* fallback for browsers without svh */
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: 128px var(--pad) 80px;
+}
+.hero__inner { width: 100%; max-width: var(--wrap); margin-inline: auto; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 12px;
+  margin-bottom: 30px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 0 rgba(var(--cyan-rgb), 0.7);
+  animation: ping 2.4s ease-out infinite;
+}
+@keyframes ping {
+  0%   { box-shadow: 0 0 0 0 rgba(var(--cyan-rgb), 0.6); }
+  70%  { box-shadow: 0 0 0 9px rgba(var(--cyan-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--cyan-rgb), 0); }
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 8.4vw, 6.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.hero__title .line { display: block; }
+
+.hero__sub {
+  max-width: 56ch;
+  margin-top: 28px;
+  font-size: clamp(1rem, 1.7vw, 1.14rem);
+  color: var(--ink-dim);
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+.hero__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  opacity: 0.7;
+}
+.hero__hint i {
+  width: 1px; height: 34px;
+  background: linear-gradient(var(--cyan), transparent);
+  animation: drop 2.2s ease-in-out infinite;
+}
+@keyframes drop {
+  0%, 100% { transform: scaleY(0.35); transform-origin: top; opacity: 0.35; }
+  50%      { transform: scaleY(1);    transform-origin: top; opacity: 1; }
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee {
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  padding-block: 22px;
+  border-block: 1px solid var(--line-soft);
+  background: rgba(var(--bg-rgb), 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  width: max-content;
+  animation: slide 34s linear infinite;
+}
+.marquee__track span {
+  font-family: var(--f-display);
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(var(--ink-rgb), 0.42);
+  white-space: nowrap;
+}
+.marquee__track i { color: var(--violet); font-size: 0.8rem; font-style: normal; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ============================================================
+   PILLARS
+   ============================================================ */
+.pillars {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 860px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
+
+.pillar {
+  position: relative;
+  padding: 34px 30px 30px;
+  border-radius: var(--r);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease), border-color 0.4s, background 0.4s;
+}
+.pillar::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.pillar:hover { transform: translateY(-6px); background: var(--glass-hi); }
+.pillar:hover::before { opacity: 0.75; }
+
+.pillar__num {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--violet);
+}
+.pillar h3 { margin: 12px 0 12px; font-size: 1.7rem; }
+.pillar p { color: var(--ink-dim); font-size: 0.95rem; }
+.pillar ul { margin-top: 20px; display: grid; gap: 9px; }
+.pillar li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+.pillar li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ============================================================
+   CARDS (3D tilt)
+   ============================================================ */
+.cards {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  perspective: 1400px;
+}
+@media (min-width: 660px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1060px) { .cards { grid-template-columns: repeat(4, 1fr); } }
+
+.card, .member, .contact__card {
+  position: relative;
+  border-radius: var(--r);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+.card:hover, .member:hover, .contact__card:hover {
+  border-color: rgba(var(--violet-rgb), 0.45);
+  box-shadow: 0 24px 60px -30px rgba(var(--violet-rgb), 0.85);
+}
+
+.card__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(var(--violet-rgb), 0.28),
+    transparent 62%
+  );
+}
+.card:hover .card__glare,
+.member:hover .card__glare,
+.contact__card:hover .card__glare { opacity: 1; }
+
+.card__body { padding: 30px 28px 28px; transform: translateZ(28px); }
+.card__no {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--violet);
+}
+
+.card__icon {
+  width: 46px; height: 46px;
+  margin-bottom: 20px;
+  border-radius: 13px;
+  background: linear-gradient(140deg, rgba(var(--cyan-rgb), 0.16), rgba(var(--violet-rgb), 0.2));
+  border: 1px solid var(--line);
+  position: relative;
+}
+.card__icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grad);
+  -webkit-mask-size: 22px 22px;
+  mask-size: 22px 22px;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.card__icon[data-icon="lab"]::after   { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6M10 3v6L5 19a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 19l-5-10V3'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 3h6M10 3v6L5 19a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 19l-5-10V3'/%3E%3C/svg%3E"); }
+.card__icon[data-icon="rocket"]::after{ -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13c-1.5 2-2 6-2 6s4-.5 6-2M12 2c4 2 7 6 7 11l-4 4H9l-4-4c0-5 3-9 7-11z'/%3E%3Ccircle cx='12' cy='11' r='2'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13c-1.5 2-2 6-2 6s4-.5 6-2M12 2c4 2 7 6 7 11l-4 4H9l-4-4c0-5 3-9 7-11z'/%3E%3Ccircle cx='12' cy='11' r='2'/%3E%3C/svg%3E"); }
+.card__icon[data-icon="ai"]::after    { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='3'/%3E%3Cpath d='M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='3'/%3E%3Cpath d='M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2'/%3E%3C/svg%3E"); }
+.card__icon[data-icon="hands"]::after { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-4.4-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 3.5C19 16.6 12 21 12 21z'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-4.4-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 3.5C19 16.6 12 21 12 21z'/%3E%3C/svg%3E"); }
+.card__icon[data-icon="link"]::after  { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='18' cy='18' r='3'/%3E%3Ccircle cx='18' cy='6' r='3'/%3E%3Cpath d='M8.6 7.4 15.4 16.6M9 6h6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='18' cy='18' r='3'/%3E%3Ccircle cx='18' cy='6' r='3'/%3E%3Cpath d='M8.6 7.4 15.4 16.6M9 6h6'/%3E%3C/svg%3E"); }
+.card__icon[data-icon="globe"]::after { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18'/%3E%3C/svg%3E"); }
+
+.card h3 { margin-bottom: 10px; }
+.card p { color: var(--ink-dim); font-size: 0.92rem; }
+.card__meta {
+  display: inline-block;
+  margin-top: 20px;
+  padding-top: 16px;
+  width: 100%;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   AI LAB
+   ============================================================ */
+.section--ai::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(60% 60% at 78% 50%, rgba(var(--violet-rgb), 0.14), transparent 70%);
+  pointer-events: none;
+}
+.ai {
+  display: grid;
+  gap: clamp(40px, 6vw, 72px);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 960px) { .ai { grid-template-columns: 1fr 1fr; } }
+
+.ai__feats { display: grid; gap: 2px; margin-top: 38px; }
+.feat {
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  transition: background 0.35s, border-color 0.35s, transform 0.35s var(--ease);
+}
+.feat:hover {
+  background: var(--glass);
+  border-color: var(--line);
+  transform: translateX(6px);
+}
+.feat b { font-family: var(--f-display); font-size: 1rem; font-weight: 600; }
+.feat span { font-size: 0.9rem; color: var(--ink-dim); }
+
+.ai__viz {
+  position: relative;
+  aspect-ratio: 1 / 0.86;
+  border-radius: 22px;
+  background: var(--grad-panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+#neural { width: 100%; height: 100%; cursor: crosshair; }
+
+.ai__viz-legend {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 14px 18px;
+  background: linear-gradient(transparent, rgba(var(--bg-rgb), 0.85));
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ai__viz-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.k { width: 8px; height: 8px; border-radius: 50%; }
+.k--in  { background: var(--cyan);    box-shadow: 0 0 8px var(--cyan); }
+.k--hid { background: var(--violet);  box-shadow: 0 0 8px var(--violet); }
+.k--out { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
+
+/* ============================================================
+   ABOUT — mission / vision
+   ============================================================ */
+#about { overflow: hidden; }
+.constellation {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%; height: 100%;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.mv {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  margin-bottom: 20px;
+}
+@media (min-width: 780px) { .mv { grid-template-columns: 1fr 1fr; } }
+
+.mv__card {
+  position: relative;
+  padding: 30px 30px 28px;
+  border-radius: var(--r);
+  background: var(--grad-panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.mv__kicker {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mv__card p {
+  font-family: var(--f-display);
+  font-size: clamp(1.02rem, 1.9vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  max-width: 900px;
+  margin-inline: auto;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 10px; bottom: 10px;
+  width: 1px;
+  background: linear-gradient(var(--cyan), var(--violet), var(--magenta));
+  opacity: 0.4;
+}
+@media (min-width: 780px) { .timeline::before { left: 50%; } }
+
+.step { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 20px; padding-block: 14px; }
+@media (min-width: 780px) {
+  .step { grid-template-columns: 1fr 40px 1fr; gap: 0; align-items: center; }
+  .step:nth-child(odd) .step__card  { grid-column: 1; text-align: right; margin-right: 34px; }
+  .step:nth-child(odd) .step__ring  { grid-column: 2; }
+  .step:nth-child(even) .step__ring { grid-column: 2; }
+  .step:nth-child(even) .step__card { grid-column: 3; margin-left: 34px; }
+}
+
+.step__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(var(--panel-rgb), 0.9);
+  border: 1px solid var(--line);
+}
+.step__ring i {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--grad);
+  box-shadow: 0 0 14px rgba(var(--violet-rgb), 0.9);
+}
+.step__ring::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--violet-rgb), 0.35);
+  opacity: 0;
+  transition: opacity 0.4s, transform 0.5s var(--ease);
+  transform: scale(0.85);
+}
+.step.is-in .step__ring::after { opacity: 1; transform: scale(1); }
+
+.step__card {
+  padding: 24px 26px;
+  border-radius: var(--r);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 0.5s var(--ease), border-color 0.4s, background 0.4s;
+}
+.step__card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-hi);
+  border-color: rgba(var(--cyan-rgb), 0.4);
+}
+.step__no {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.step__card h3 { margin: 8px 0 8px; font-size: 1.45rem; }
+.step__card p { color: var(--ink-dim); font-size: 0.93rem; }
+
+/* ============================================================
+   TEAM
+   ============================================================ */
+.team {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  perspective: 1400px;
+}
+@media (min-width: 640px) { .team { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 940px) { .team { grid-template-columns: repeat(3, 1fr); } }
+
+.member { padding: 22px 22px 26px; }
+.member__photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(140deg, rgba(var(--cyan-rgb), 0.12), rgba(var(--violet-rgb), 0.16));
+  transform: translateZ(20px);
+}
+/* Portraits render in their own colour — no greyscale, no palette tint. */
+.member__photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.member:hover .member__photo img { transform: scale(1.04); }
+
+.member__role {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  transform: translateZ(16px);
+}
+.member h3 { margin: 8px 0 8px; transform: translateZ(16px); }
+.member__bio { font-size: 0.9rem; color: var(--ink-dim); transform: translateZ(12px); }
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+.events {
+  display: grid;
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+@media (min-width: 860px) { .events { grid-template-columns: repeat(3, 1fr); } }
+
+.event {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: clamp(26px, 3.4vw, 38px) clamp(22px, 2.6vw, 30px);
+  background: rgba(var(--panel-rgb), 0.74);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.4s;
+}
+.event:hover { background: var(--panel-hi); }
+.event__date {
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.event h3 { margin-top: 4px; font-size: 1.3rem; }
+.event p { font-size: 0.92rem; color: var(--ink-dim); }
+.event__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cyan);
+  width: fit-content;
+}
+.event__link svg { transition: transform 0.3s var(--ease); }
+.event__link:hover svg { transform: translateX(4px); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  max-width: 860px;
+  margin-inline: auto;
+  perspective: 1200px;
+}
+@media (min-width: 720px) { .contact { grid-template-columns: 1fr 1fr; } }
+
+.contact__card {
+  display: grid;
+  gap: 8px;
+  padding: 30px 28px;
+  text-align: center;
+}
+.contact__label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transform: translateZ(14px);
+}
+.contact__card b {
+  font-family: var(--f-display);
+  font-size: clamp(0.98rem, 2.2vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  word-break: break-word;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform: translateZ(24px);
+}
+
+/* ============================================================
+   APPLY FORM
+   ============================================================ */
+.apply {
+  position: relative;
+  padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 62px);
+  border-radius: 28px;
+  background: var(--grad-panel-strong);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+.apply__glow {
+  position: absolute;
+  top: -45%; left: 50%;
+  width: 130%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(var(--violet-rgb), 0.30), transparent 58%);
+  pointer-events: none;
+}
+/* Must exclude the glow, or it inherits `relative` from this rule (declared
+   later, same specificity) and starts occupying layout space. */
+.apply > *:not(.apply__glow) { position: relative; }
+.apply__head { text-align: center; margin-bottom: clamp(32px, 5vw, 48px); }
+.apply__head .lede { margin-inline: auto; }
+
+.apply-form {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+  max-width: 760px;
+  margin-inline: auto;
+}
+@media (min-width: 660px) { .apply-form { grid-template-columns: 1fr 1fr; } }
+.field--wide, .apply-form__submit { grid-column: 1 / -1; }
+
+.field { display: grid; gap: 8px; align-content: start; }
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-dim);
+}
+.field__hint {
+  margin-top: -4px;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: var(--f-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: rgba(var(--panel-rgb), 0.7);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+.input::placeholder { color: var(--placeholder); }
+.input:hover { border-color: rgba(var(--violet-rgb), 0.4); }
+.input:focus {
+  outline: none;
+  background: var(--field-focus);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(var(--cyan-rgb), 0.16);
+}
+textarea.input { resize: vertical; min-height: 110px; line-height: 1.6; }
+/* Firefox and Chrome both render number spinners badly on a dark field. */
+.input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--glass);
+  border: 1px dashed rgba(var(--violet-rgb), 0.5);
+  border-radius: 13px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+}
+.upload-btn:hover {
+  background: var(--glass-hi);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+/* Keyboard users get a visible ring even though the input itself is hidden. */
+#file-input:focus-visible + .upload-btn {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+#file-preview:not(:empty) { margin-top: 6px; }
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 13px;
+  background: rgba(var(--panel-rgb), 0.75);
+  border: 1px solid var(--line);
+}
+.file-thumb {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.file-icon {
+  display: grid;
+  place-items: center;
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: var(--glass-hi);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.file-info { min-width: 0; }
+.file-info h4 {
+  font-family: var(--f-body);
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-info p { font-size: 12px; color: var(--ink-faint); }
+
+.apply-form__submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+.btn[disabled] { opacity: 0.55; pointer-events: none; }
+
+.form-status {
+  font-size: 13px;
+  color: var(--ink-dim);
+}
+.form-status[data-state="error"] { color: var(--danger); }
+
+/* ============================================================
+   THANK-YOU MODAL
+   ============================================================ */
+.thankyou {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(var(--bg-rgb), 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.thankyou[hidden] { display: none; }
+.thankyou.open { opacity: 1; }
+
+.thankyou__box {
+  width: min(440px, 100%);
+  padding: 42px 34px 34px;
+  text-align: center;
+  border-radius: 24px;
+  background: var(--grad-modal);
+  border: 1px solid rgba(var(--violet-rgb), 0.4);
+  box-shadow: 0 40px 90px -30px rgba(var(--violet-rgb), 0.7);
+  transform: translateY(18px) scale(0.96);
+  transition: transform 0.35s var(--ease);
+}
+.thankyou.open .thankyou__box { transform: none; }
+
+.thankyou__mark { color: var(--cyan); display: grid; place-items: center; margin-bottom: 18px; }
+.ty-circle { stroke-dasharray: 145; stroke-dashoffset: 145; }
+.ty-check  { stroke-dasharray: 48;  stroke-dashoffset: 48; }
+.thankyou.open .ty-circle { animation: stroke 0.6s var(--ease) forwards; }
+.thankyou.open .ty-check  { animation: stroke 0.4s var(--ease) 0.45s forwards; }
+@keyframes stroke { to { stroke-dashoffset: 0; } }
+
+.thankyou__box h3 { font-size: 1.6rem; margin-bottom: 10px; }
+.thankyou__box p { color: var(--ink-dim); font-size: 0.94rem; margin-bottom: 26px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  position: relative;
+  z-index: 3;
+  padding-block: 68px 32px;
+  border-top: 1px solid var(--line-soft);
+  background: rgba(var(--bg-rgb), 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.footer__grid {
+  display: grid;
+  gap: 40px 28px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) { .footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+
+.footer__brand p { margin-top: 12px; font-size: 14px; color: var(--ink-faint); max-width: 30ch; }
+.footer__col { display: grid; gap: 11px; align-content: start; }
+.footer__col h4 {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+.footer__col a {
+  font-size: 14px;
+  color: var(--ink-dim);
+  width: fit-content;
+  transition: color 0.25s, transform 0.25s var(--ease);
+}
+.footer__col a:hover { color: var(--ink); transform: translateX(3px); }
+
+.footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  justify-content: space-between;
+  margin-top: 52px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.footer__sig { font-family: var(--f-mono); letter-spacing: 0.1em; }
+
+/* ============================================================
+   MOBILE NAV
+   ============================================================ */
+@media (max-width: 980px) {
+  .nav__burger { display: block; margin-left: auto; }
+  .nav__cta { display: none; }
+  .nav__links a.nav__cta-mobile { display: inline-flex; margin-top: 14px; width: fit-content; }
+  .nav__links a.nav__cta-mobile::after { display: none; }
+  .nav__links {
+    position: fixed;
+    inset: 0 0 auto 0;
+    top: 0;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 92px var(--pad) 34px;
+    background: rgba(var(--bg-rgb), 0.96);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-102%);
+    transition: transform 0.55s var(--ease);
+    z-index: -1;
+  }
+  .nav__links.is-open { transform: none; }
+  .nav__links a { font-size: 19px; font-family: var(--f-display); padding: 12px 4px; }
+  .nav__links a::after { left: 4px; right: auto; width: 30px; }
+}
+
+/* ============================================================
+   RESPONSIVE — device adaptation
+
+   Layout is driven by the viewport and the pointer type, not by
+   sniffing user agents, so a phone, a tablet, a touch laptop and a
+   desktop each get the right treatment automatically. JS mirrors the
+   same buckets onto <html data-device> and uses them to pick a 3D
+   quality tier; nothing here depends on that attribute.
+
+   Buckets:  phone < 600  |  tablet 600–1023  |  laptop 1024–1599
+             desktop 1600+   ·  orientation and pointer handled below
+   ============================================================ */
+
+/* ---------- any touch device: bigger targets, no iOS zoom ---------- */
+@media (pointer: coarse) {
+  /* Under 16px in a focused field makes iOS Safari zoom the whole page. */
+  .input { font-size: 16px; }
+
+  .theme-toggle, .nav__burger { width: 44px; height: 44px; }
+  .nav__burger span { left: 13px; }
+  .nav__burger span:nth-child(1) { top: 18px; }
+  .nav__burger span:nth-child(2) { top: 24px; }
+
+  .event__link { padding-block: 12px; }
+  .footer__col a { padding-block: 7px; }
+  .btn { --btn-pad: 15px 26px; }
+  .btn--sm { --btn-pad: 11px 18px; }
+
+  /* Touch sizing inflates the bar; keep it from eating the viewport. */
+  .nav { padding-block: 12px; }
+  .upload-btn { padding: 14px 22px; }
+
+  /* Tilt and glare are pointer effects; they only misfire on touch. */
+  .card__glare { display: none; }
+}
+
+/* ---------- nav must survive the narrowest phones ---------- */
+.nav__brand { min-width: 0; }
+.nav__logo, .theme-toggle, .nav__burger, .nav__cta { flex-shrink: 0; }
+.nav__name { overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 420px) {
+  .nav { gap: 10px; }
+  .nav__logo { width: 28px; height: 28px; }
+  .nav__name { font-size: 13.5px; letter-spacing: 0.06em; }
+}
+/* Narrowest phones: shrink the wordmark rather than truncate it —
+   the organization's name should survive at every width. */
+@media (max-width: 340px) {
+  .nav { gap: 8px; }
+  .nav__name { font-size: 11.5px; letter-spacing: 0.02em; }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 599px) {
+  :root { --pad: 18px; --r: 16px; }
+
+  .hero { padding-top: 108px; padding-bottom: 64px; }
+  .hero__title { font-size: clamp(2.15rem, 10.4vw, 3.2rem); }
+  .hero__cta { gap: 10px; }
+  .hero__cta .btn { flex: 1 1 100%; justify-content: center; }
+
+  .eyebrow { font-size: 10px; padding: 6px 13px 6px 10px; }
+  .apply { border-radius: 20px; }
+  .join__cta, .apply-form__submit { justify-content: stretch; }
+  .apply-form__submit .btn { width: 100%; justify-content: center; }
+  .footer__base { flex-direction: column; gap: 6px; }
+}
+
+/* ---------- phone / small tablet in landscape ----------
+   Short viewports: a full-height hero would push everything off
+   screen, so it collapses to its natural height. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .hero {
+    min-height: 0;
+    padding-top: 78px;
+    padding-bottom: 40px;
+  }
+  .hero__title { font-size: clamp(1.55rem, 4.6vw, 2.4rem); }
+  .hero__sub { font-size: 0.88rem; max-width: 46ch; margin-top: 14px; }
+  .hero__cta { margin-top: 18px; }
+  .eyebrow { margin-bottom: 16px; }
+  .hero__hint { display: none; }
+  .section { padding-block: 58px; }
+  .sec-head { margin-bottom: 40px; }
+  .nav { padding-block: 10px; }
+  /* The drawer is taller than the screen in landscape. */
+  .nav__links { max-height: 100svh; overflow-y: auto; padding-top: 76px; }
+}
+
+/* ---------- tablets ---------- */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .hero { padding-top: 124px; }
+  .hero__title { font-size: clamp(2.8rem, 7.4vw, 4.4rem); }
+  .ai { gap: 44px; }
+  .ai__viz { max-width: 620px; margin-inline: auto; }
+}
+
+/* ---------- large desktops: let the layout breathe ---------- */
+@media (min-width: 1600px) {
+  :root { --wrap: 1320px; }
+  body { font-size: 17px; }
+}
+@media (min-width: 2200px) {
+  :root { --wrap: 1480px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .grain, .cursor { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════ PRELOADER ══════════ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <div class="preloader__mark">
+      <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+        <path class="pl-path" d="M32 4 L57 18 L57 46 L32 60 L7 46 L7 18 Z" />
+        <path class="pl-path pl-path--in" d="M32 18 L45 25.5 L45 40.5 L32 48 L19 40.5 L19 25.5 Z" />
+      </svg>
+    </div>
+    <div class="preloader__bar"><span id="preloaderFill"></span></div>
+    <div class="preloader__label">ENTERING THE ARENA <em id="preloaderPct">0</em>%</div>
+  </div>
+</div>
+
+<!-- ══════════ AMBIENT 3D BACKGROUND ══════════ -->
+<canvas id="scene" class="scene" aria-hidden="true"></canvas>
+<div class="scene-veil" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══════════ CURSOR ══════════ -->
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+
+<!-- ══════════ SCROLL PROGRESS ══════════ -->
+<div class="scroll-rail" aria-hidden="true"><i id="scrollFill"></i></div>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" data-magnetic>
+    <svg class="nav__logo" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#22d3ee" /><stop offset="55%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#f472b6" />
+        </linearGradient>
+      </defs>
+      <path d="M32 4 L57 18 L57 46 L32 60 L7 46 L7 18 Z" fill="none" stroke="url(#lg)" stroke-width="3" />
+      <path d="M22 24 L32 38 L42 24 M32 38 L32 47" fill="none" stroke="url(#lg)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <span class="nav__name">Youth Leaders <b>Arena</b></span>
+  </a>
+
+  <nav class="nav__links" id="navLinks" aria-label="Primary">
+    <a href="#about">About</a>
+    <a href="#programs">Programs</a>
+    <a href="#ai">AI Learning</a>
+    <a href="#team">Team</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="#apply" class="btn btn--sm btn--primary nav__cta-mobile">Apply now</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+    <svg class="ic ic--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 2.4v2.4M12 19.2v2.4M4.2 12H1.8M22.2 12h-2.4M5.6 5.6 7.3 7.3M16.7 16.7l1.7 1.7M18.4 5.6 16.7 7.3M7.3 16.7l-1.7 1.7" />
+    </svg>
+    <svg class="ic ic--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z" />
+    </svg>
+  </button>
+
+  <a href="#apply" class="btn btn--sm btn--primary nav__cta" data-magnetic>Apply now</a>
+
+  <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span>
+  </button>
+</header>
+
+<main id="top">
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="hero">
+  <div class="hero__inner">
+    <p class="eyebrow reveal" data-d="0">
+      <i class="dot"></i> A leadership-based organization
+    </p>
+
+    <h1 class="hero__title">
+      <span class="line reveal" data-d="1">We build young leaders,</span>
+      <span class="line reveal" data-d="2">one <em class="grad">session</em> at a time.</span>
+    </h1>
+
+    <p class="hero__sub reveal" data-d="3">
+      Youth Leaders Arena trains teens and young adults in the skills that make a
+      leader: public speaking, teamwork, decision-making and service — through
+      hands-on sessions, workshops and competitions. Anyone ready to grow into a
+      leader is welcome.
+    </p>
+
+    <div class="hero__cta reveal" data-d="4">
+      <a href="#apply" class="btn btn--primary" data-magnetic>
+        <span>Apply now</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#programs" class="btn btn--ghost" data-magnetic>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        <span>See our programs</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__hint" aria-hidden="true">
+    <span>drag the core</span>
+    <i></i>
+  </div>
+</section>
+
+<!-- ══════════ MARQUEE ══════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Confidence</span><i>✦</i><span>Character</span><i>✦</i><span>Community</span><i>✦</i>
+    <span>Public Speaking</span><i>✦</i><span>Teamwork</span><i>✦</i><span>Service</span><i>✦</i>
+    <span>Confidence</span><i>✦</i><span>Character</span><i>✦</i><span>Community</span><i>✦</i>
+    <span>Public Speaking</span><i>✦</i><span>Teamwork</span><i>✦</i><span>Service</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section class="section" id="about">
+  <canvas id="constellation" class="constellation" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="tag reveal">01 — Who we are</p>
+      <h2 class="reveal" data-d="1">About Youth<br />Leaders <em class="grad">Arena</em>.</h2>
+      <p class="lede reveal" data-d="2">
+        We are a youth-focused organization dedicated to raising confident, capable
+        leaders. Through structured sessions, mentorship and real-world practice, our
+        members learn to speak, organize and lead — inside the classroom and beyond it.
+      </p>
+    </header>
+
+    <div class="mv">
+      <article class="mv__card reveal" data-d="1">
+        <span class="mv__kicker">Mission</span>
+        <p>To equip young people with the skills, confidence and mindset to lead in their schools and communities.</p>
+      </article>
+      <article class="mv__card reveal" data-d="2">
+        <span class="mv__kicker">Vision</span>
+        <p>A generation of young leaders driving change wherever they go.</p>
+      </article>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar reveal" data-d="1">
+        <span class="pillar__num">01</span>
+        <h3>Confidence</h3>
+        <p>Members practice speaking and leading in front of others until it feels natural.</p>
+      </article>
+      <article class="pillar reveal" data-d="2">
+        <span class="pillar__num">02</span>
+        <h3>Character</h3>
+        <p>We build integrity and accountability alongside skill — leadership starts with values.</p>
+      </article>
+      <article class="pillar reveal" data-d="3">
+        <span class="pillar__num">03</span>
+        <h3>Community</h3>
+        <p>Members apply what they learn through service and projects that help the people around them.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROGRAMS ══════════ -->
+<section class="section" id="programs">
+  <div class="wrap">
+    <header class="sec-head sec-head--split">
+      <div>
+        <p class="tag reveal">02 — What we run</p>
+        <h2 class="reveal" data-d="1">Four ways to<br /><em class="grad">step up</em>.</h2>
+      </div>
+      <p class="lede reveal" data-d="2">
+        Start with a weekly session and go as far as you want — into multi-week
+        programs, hands-on workshops, and competitions that put everything you've
+        learned in front of a judge.
+      </p>
+    </header>
+
+    <div class="cards">
+      <article class="card reveal" data-d="1" data-tilt>
+        <div class="card__glare"></div>
+        <div class="card__body">
+          <div class="card__icon" data-icon="lab"></div>
+          <span class="card__no">01</span>
+          <h3>Sessions</h3>
+          <p>Weekly leadership sessions covering communication, teamwork and decision-making, led by our senior members and mentors.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" data-d="2" data-tilt>
+        <div class="card__glare"></div>
+        <div class="card__body">
+          <div class="card__icon" data-icon="rocket"></div>
+          <span class="card__no">02</span>
+          <h3>Programs</h3>
+          <p>Structured multi-week programs that take members from first-time speaker to confident group leader.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" data-d="3" data-tilt>
+        <div class="card__glare"></div>
+        <div class="card__body">
+          <div class="card__icon" data-icon="hands"></div>
+          <span class="card__no">03</span>
+          <h3>Workshops</h3>
+          <p>Hands-on workshops on public speaking, project management and community organizing.</p>
+        </div>
+      </article>
+
+      <article class="card reveal" data-d="4" data-tilt>
+        <div class="card__glare"></div>
+        <div class="card__body">
+          <div class="card__icon" data-icon="globe"></div>
+          <span class="card__no">04</span>
+          <h3>Competitions</h3>
+          <p>Debate, speech and leadership competitions that put what members learn into practice.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AI LEARNING ══════════ -->
+<section class="section section--ai" id="ai">
+  <div class="wrap ai">
+    <div class="ai__copy">
+      <p class="tag reveal">03 — AI Learning</p>
+      <h2 class="reveal" data-d="1">Leaders who<br />understand AI.</h2>
+      <p class="lede reveal" data-d="2">
+        The tools are changing faster than the curriculum. We give members practical
+        AI literacy alongside the leadership work — so they can use these tools well,
+        question them properly, and explain them to everyone else in the room.
+      </p>
+
+      <div class="ai__feats">
+        <div class="feat reveal" data-d="1"><b>Hands-on, not theoretical</b><span>Members build something real with the tools rather than just reading about them.</span></div>
+        <div class="feat reveal" data-d="2"><b>Judgement first</b><span>Where AI helps, where it misleads, and how to tell the difference.</span></div>
+        <div class="feat reveal" data-d="3"><b>Taught, then taught again</b><span>Members who learn it run the next session for the members behind them.</span></div>
+      </div>
+    </div>
+
+    <div class="ai__viz reveal" data-d="2">
+      <canvas id="neural" aria-label="Animated diagram of a neural network"></canvas>
+      <div class="ai__viz-legend">
+        <span><i class="k k--in"></i>Input</span>
+        <span><i class="k k--hid"></i>Hidden layers</span>
+        <span><i class="k k--out"></i>Output</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TEAM ══════════ -->
+<section class="section" id="team">
+  <div class="wrap">
+    <header class="sec-head sec-head--center">
+      <p class="tag reveal">04 — Our leaders</p>
+      <h2 class="reveal" data-d="1">The people behind<br />the <em class="grad">Arena</em>.</h2>
+    </header>
+
+    <div class="team">
+      <article class="member reveal" data-d="1" data-tilt>
+        <div class="card__glare"></div>
+        <div class="member__photo">
+          <img src="https://drive.google.com/thumbnail?id=1cOa0Yi4ivaRs05SYa9WGwnlFlHeziH0u&sz=w1000"
+               alt="Portrait of MD Shahriar Nasif, Founder and Director" loading="lazy" />
+        </div>
+        <p class="member__role">Founder &amp; Director</p>
+        <h3>MD Shahriar Nasif</h3>
+        <p class="member__bio">Leads overall strategy and program direction for Youth Leaders Arena.</p>
+      </article>
+
+      <article class="member reveal" data-d="2" data-tilt>
+        <div class="card__glare"></div>
+        <div class="member__photo">
+          <img src="https://drive.google.com/thumbnail?id=1hFP9AwsWRyLHeXR7rOJCamSzYSZb041g&sz=w1000"
+               alt="Youth Leaders Arena" loading="lazy" />
+        </div>
+        <p class="member__role">Programs Lead</p>
+        <h3>Add name</h3>
+        <p class="member__bio">Designs and runs the sessions, workshops and competitions.</p>
+      </article>
+
+      <article class="member reveal" data-d="3" data-tilt>
+        <div class="card__glare"></div>
+        <div class="member__photo">
+          <img src="https://drive.google.com/thumbnail?id=1hFP9AwsWRyLHeXR7rOJCamSzYSZb041g&sz=w1000"
+               alt="Youth Leaders Arena" loading="lazy" />
+        </div>
+        <p class="member__role">Outreach Lead</p>
+        <h3>Add name</h3>
+        <p class="member__bio">Builds partnerships with schools and organizations.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EVENTS ══════════ -->
+<section class="section" id="events">
+  <div class="wrap">
+    <header class="sec-head sec-head--split">
+      <div>
+        <p class="tag reveal">05 — What's next</p>
+        <h2 class="reveal" data-d="1">Upcoming<br /><em class="grad">events</em>.</h2>
+      </div>
+    </header>
+
+    <div class="events">
+      <article class="event reveal" data-d="1">
+        <span class="event__date">Date TBA</span>
+        <h3>Public Speaking Workshop</h3>
+        <p>A hands-on session on structuring and delivering a confident speech.</p>
+        <a href="#apply" class="event__link">Apply to attend
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+      <article class="event reveal" data-d="2">
+        <span class="event__date">Date TBA</span>
+        <h3>Youth Leadership Summit</h3>
+        <p>A full-day gathering of members for talks, panels and networking.</p>
+        <a href="#apply" class="event__link">Apply to attend
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+      <article class="event reveal" data-d="3">
+        <span class="event__date">Date TBA</span>
+        <h3>Debate Competition</h3>
+        <p>Members compete in structured debate rounds judged by mentors.</p>
+        <a href="#apply" class="event__link">Apply to attend
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HOW TO JOIN ══════════ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <header class="sec-head sec-head--center">
+      <p class="tag reveal">06 — How to join</p>
+      <h2 class="reveal" data-d="1">Three steps to<br />your first <em class="grad">session</em>.</h2>
+    </header>
+
+    <ol class="timeline">
+      <li class="step reveal" data-d="1">
+        <span class="step__ring"><i></i></span>
+        <div class="step__card">
+          <span class="step__no">Step 01</span>
+          <h3>Apply</h3>
+          <p>Fill out the short application form below with your details and interests.</p>
+        </div>
+      </li>
+      <li class="step reveal" data-d="2">
+        <span class="step__ring"><i></i></span>
+        <div class="step__card">
+          <span class="step__no">Step 02</span>
+          <h3>Interview</h3>
+          <p>A brief conversation with our team to understand your goals.</p>
+        </div>
+      </li>
+      <li class="step reveal" data-d="3">
+        <span class="step__ring"><i></i></span>
+        <div class="step__card">
+          <span class="step__no">Step 03</span>
+          <h3>Onboard</h3>
+          <p>Join a session, meet your cohort and start your first program.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════ APPLY ══════════ -->
+<section class="section section--apply" id="apply">
+  <div class="wrap">
+    <div class="apply reveal">
+      <div class="apply__glow" aria-hidden="true"></div>
+
+      <header class="apply__head">
+        <p class="tag">07 — Apply</p>
+        <h2>Ready to <em class="grad">lead</em>?</h2>
+        <p class="lede">
+          Apply to join Youth Leaders Arena. Fill out the form below and our team will
+          follow up.
+        </p>
+      </header>
+
+      <!-- Field names below are read by the Google Apps Script Web App.
+           Do not rename them without updating the script. -->
+      <form class="apply-form" id="apply-form" novalidate>
+        <div class="field">
+          <label for="f-name">Full name</label>
+          <input class="input" id="f-name" type="text" name="name" placeholder="Your name" required />
+        </div>
+        <div class="field">
+          <label for="f-age">Age</label>
+          <input class="input" id="f-age" type="number" inputmode="numeric" name="age" placeholder="16" min="1" max="120" required />
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input class="input" id="f-email" type="email" inputmode="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone</label>
+          <input class="input" id="f-phone" type="tel" inputmode="tel" name="phone" placeholder="+880" required />
+        </div>
+        <div class="field field--wide">
+          <label for="f-program">Program of interest</label>
+          <input class="input" id="f-program" type="text" name="program" placeholder="Sessions, Programs, Workshops or Competition" />
+        </div>
+        <div class="field field--wide">
+          <label for="f-reason">Why do you want to join?</label>
+          <textarea class="input" id="f-reason" name="reason" rows="4" placeholder="Tell us a little about yourself"></textarea>
+        </div>
+
+        <div class="field field--wide">
+          <label>Attachment</label>
+          <p class="field__hint">Upload your picture</p>
+          <input type="file" id="file-input" name="attachment" accept="image/*,.pdf" hidden required />
+          <label for="file-input" class="upload-btn">
+            <svg aria-hidden="true" width="18" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none">
+              <path d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M17 15V18M17 21V18M17 18H14M17 18H20" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+            Add file
+          </label>
+          <div id="file-preview"></div>
+        </div>
+
+        <div class="field--wide apply-form__submit">
+          <button type="submit" class="btn btn--primary btn--lg">
+            <span>Submit application</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="form-status" id="apply-form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <header class="sec-head sec-head--center">
+      <p class="tag reveal">08 — Get in touch</p>
+      <h2 class="reveal" data-d="1">Contact <em class="grad">us</em>.</h2>
+    </header>
+
+    <div class="contact">
+      <a class="contact__card reveal" data-d="1" href="mailto:mdmukul666343@gmail.com" data-tilt>
+        <div class="card__glare"></div>
+        <span class="contact__label">Email</span>
+        <b>mdmukul666343@gmail.com</b>
+      </a>
+      <a class="contact__card reveal" data-d="2" href="tel:+8801861333923" data-tilt>
+        <div class="card__glare"></div>
+        <span class="contact__label">Phone</span>
+        <b>+880 1861 333923</b>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ THANK YOU ══════════ -->
+<div class="thankyou" id="thankyou-overlay" role="dialog" aria-modal="true" aria-labelledby="thankyou-title" hidden>
+  <div class="thankyou__box">
+    <div class="thankyou__mark" aria-hidden="true">
+      <svg viewBox="0 0 52 52" width="52" height="52">
+        <circle class="ty-circle" cx="26" cy="26" r="23" fill="none" stroke="currentColor" stroke-width="2.5" />
+        <path class="ty-check" d="M15 27 L23 34 L38 19" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <h3 id="thankyou-title">You're in!</h3>
+    <p>Thanks for applying to Youth Leaders Arena — check your email for a confirmation, our team will follow up soon.</p>
+    <button type="button" class="btn btn--primary" id="thankyou-close">Done</button>
+  </div>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <span class="nav__name">Youth Leaders <b>Arena</b></span>
+      <p>We build young leaders, one session at a time.</p>
+    </div>
+    <nav class="footer__col" aria-label="Organization">
+      <h4>Organization</h4>
+      <a href="#about">About</a>
+      <a href="#programs">Programs</a>
+      <a href="#ai">AI Learning</a>
+      <a href="#team">Team</a>
+    </nav>
+    <nav class="footer__col" aria-label="Take part">
+      <h4>Take part</h4>
+      <a href="#events">Events</a>
+      <a href="#how">How to join</a>
+      <a href="#apply">Apply</a>
+    </nav>
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <a href="mailto:mdmukul666343@gmail.com">mdmukul666343@gmail.com</a>
+      <a href="tel:+8801861333923">+880 1861 333923</a>
+    </div>
+  </div>
+  <div class="wrap footer__base">
+    <span>© <span id="year">2026</span> Youth Leaders Arena. All rights reserved.</span>
+    <span class="footer__sig">We build young leaders.</span>
+  </div>
+</footer>
+
+<script type="module">
+/* ============================================================
+   YOUTH LEADERS ARENA — interaction + 3D engine
+   Zero dependencies. Hand-written WebGL for the hero core.
+   ============================================================ */
+
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const COARSE = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+/* ============================================================
+   0a. DEVICE PROFILE
+
+   Classifies the device from viewport size and pointer type — never
+   from the user agent string, which lies. The class is published on
+   <html data-device> for inspection, and picks the 3D quality tier so
+   a phone GPU isn't asked to do desktop work.
+
+   Geometry is built once at load. Rotating a phone or resizing a
+   window re-evaluates the class and the pixel-ratio cap, but does not
+   rebuild buffers — the class rarely changes across those events, and
+   a rebuild mid-session would be visible.
+   ============================================================ */
+const TIERS = {
+  phone:   { nodes: 2200, rings: 800,  arcs: 40,  dpr: 1.4,  octaves: 4 },
+  tablet:  { nodes: 3600, rings: 1300, arcs: 64,  dpr: 1.5,  octaves: 4 },
+  laptop:  { nodes: 5400, rings: 1900, arcs: 96,  dpr: 1.75, octaves: 5 },
+  desktop: { nodes: 6400, rings: 2200, arcs: 112, dpr: 1.9,  octaves: 5 },
+};
+
+function classifyDevice() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const short = Math.min(w, h);
+  const long = Math.max(w, h);
+  const touch = COARSE || (navigator.maxTouchPoints || 0) > 1;
+
+  // Touch devices are judged on their physical size, so a phone in
+  // landscape is still a phone. Pointer devices go by window width.
+  if (touch) {
+    if (short < 600 || long < 900) return "phone";
+    return short < 1100 ? "tablet" : "laptop";
+  }
+  if (w < 600) return "phone";
+  if (w < 1024) return "tablet";
+  return w < 1600 ? "laptop" : "desktop";
+}
+
+const DEVICE = { class: classifyDevice(), touch: COARSE || (navigator.maxTouchPoints || 0) > 1 };
+DEVICE.tier = TIERS[DEVICE.class];
+document.documentElement.setAttribute("data-device", DEVICE.class);
+
+/* ============================================================
+   0. THEME
+
+   CSS handles itself via tokens under [data-theme]. The canvases
+   can't — WebGL and 2D contexts need their colours in code, and the
+   3D scene additionally has to swap blend modes, since additive
+   blending is invisible on a white ground. THEME.light (0/1) is read
+   every frame by the scene; the 2D canvases read PALETTE and are
+   redrawn on change.
+   ============================================================ */
+const THEME = { name: "dark", light: 0 };
+const themeListeners = [];
+
+const PALETTES = {
+  dark: {
+    // 3D core, as 0–1 RGB triples
+    core: { a: [0.13, 0.83, 0.93], b: [0.55, 0.36, 0.96], c: [0.96, 0.45, 0.71] },
+    arc: { a: [0.13, 0.83, 0.93], b: [0.96, 0.45, 0.71] },
+    // neural diagram
+    nodes: ["#22d3ee", "#8b5cf6", "#8b5cf6", "#f472b6"],
+    edge: (a) => `rgba(139, 155, 220, ${a})`,
+    edgeLit: "rgba(34, 211, 238, 0.55)",
+    pulseCore: "rgba(190, 240, 255, 0.95)",
+    pulseEdge: "rgba(34, 211, 238, 0)",
+    nodeRing: "rgba(255, 255, 255, 0.55)",
+    // constellation
+    link: (a) => `rgba(139, 92, 246, ${a})`,
+    linkMouse: (a) => `rgba(34, 211, 238, ${a})`,
+    dot: (a) => `rgba(190, 205, 255, ${a})`,
+  },
+  light: {
+    core: { a: [0.04, 0.44, 0.52], b: [0.43, 0.25, 0.94], c: [0.76, 0.18, 0.54] },
+    arc: { a: [0.04, 0.44, 0.52], b: [0.76, 0.18, 0.54] },
+    nodes: ["#0a7086", "#6d3ff0", "#6d3ff0", "#c22d8a"],
+    edge: (a) => `rgba(70, 85, 150, ${a * 1.7})`,
+    edgeLit: "rgba(10, 112, 134, 0.8)",
+    pulseCore: "rgba(40, 25, 110, 0.9)",
+    pulseEdge: "rgba(109, 63, 240, 0)",
+    nodeRing: "rgba(255, 255, 255, 0.9)",
+    link: (a) => `rgba(109, 63, 240, ${a * 1.5})`,
+    linkMouse: (a) => `rgba(10, 112, 134, ${a * 1.35})`,
+    dot: (a) => `rgba(56, 68, 125, ${a})`,
+  },
+};
+
+const PAL = () => PALETTES[THEME.name];
+
+function initTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById("themeToggle");
+  const meta = document.querySelector('meta[name="theme-color"]');
+
+  function apply(name, persist) {
+    THEME.name = name === "light" ? "light" : "dark";
+    THEME.light = THEME.name === "light" ? 1 : 0;
+    root.setAttribute("data-theme", THEME.name);
+
+    if (btn) {
+      btn.setAttribute("aria-pressed", THEME.light ? "true" : "false");
+      btn.setAttribute(
+        "aria-label",
+        THEME.light ? "Switch to dark theme" : "Switch to light theme"
+      );
+    }
+    if (meta) meta.setAttribute("content", THEME.light ? "#f5f7fd" : "#05060f");
+    if (persist) {
+      try { localStorage.setItem("yla-theme", THEME.name); } catch (e) {}
+    }
+    themeListeners.forEach((fn) => fn());
+  }
+
+  // The inline <head> script already picked the initial theme; adopt it.
+  apply(root.getAttribute("data-theme") || "dark", false);
+
+  if (btn) {
+    btn.addEventListener("click", () => apply(THEME.light ? "dark" : "light", true));
+  }
+
+  // Follow the OS only while the visitor hasn't made an explicit choice.
+  const mq = window.matchMedia("(prefers-color-scheme: light)");
+  const onSystem = (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem("yla-theme"); } catch (err) {}
+    if (saved !== "light" && saved !== "dark") apply(e.matches ? "light" : "dark", false);
+  };
+  if (mq.addEventListener) mq.addEventListener("change", onSystem);
+  else if (mq.addListener) mq.addListener(onSystem);
+}
+
+/* ============================================================
+   1. MAT4 — just enough linear algebra, column-major
+   ============================================================ */
+const m4 = {
+  create: () => new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]),
+
+  perspective(out, fovy, aspect, near, far) {
+    const f = 1 / Math.tan(fovy / 2);
+    const nf = 1 / (near - far);
+    out[0] = f / aspect; out[1] = 0; out[2] = 0; out[3] = 0;
+    out[4] = 0; out[5] = f; out[6] = 0; out[7] = 0;
+    out[8] = 0; out[9] = 0; out[10] = (far + near) * nf; out[11] = -1;
+    out[12] = 0; out[13] = 0; out[14] = 2 * far * near * nf; out[15] = 0;
+    return out;
+  },
+
+  multiply(out, a, b) {
+    const a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3];
+    const a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7];
+    const a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11];
+    const a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
+    for (let i = 0; i < 4; i++) {
+      const b0 = b[i * 4], b1 = b[i * 4 + 1], b2 = b[i * 4 + 2], b3 = b[i * 4 + 3];
+      out[i * 4]     = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[i * 4 + 1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[i * 4 + 2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[i * 4 + 3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+    }
+    return out;
+  },
+
+  translation(out, x, y, z) {
+    out.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1]);
+    return out;
+  },
+  scaling(out, s) {
+    out.set([s, 0, 0, 0, 0, s, 0, 0, 0, 0, s, 0, 0, 0, 0, 1]);
+    return out;
+  },
+  rotationX(out, r) {
+    const c = Math.cos(r), s = Math.sin(r);
+    out.set([1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]);
+    return out;
+  },
+  rotationY(out, r) {
+    const c = Math.cos(r), s = Math.sin(r);
+    out.set([c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]);
+    return out;
+  },
+};
+
+/* ============================================================
+   2. SHADERS
+   ============================================================ */
+const VS_QUAD = `
+attribute vec2 aPos;
+void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }
+`;
+
+const FS_NEBULA = `
+precision highp float;
+uniform vec2  uRes;
+uniform float uTime;
+uniform vec2  uMouse;
+uniform float uScroll;
+uniform float uCenter;
+uniform float uLight;
+
+float hash21(vec2 p){
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+float vnoise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = hash21(i);
+  float b = hash21(i + vec2(1.0, 0.0));
+  float c = hash21(i + vec2(0.0, 1.0));
+  float d = hash21(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  for (int i = 0; i < OCTAVES; i++){
+    v += a * vnoise(p);
+    p = p * 2.03 + 11.7;
+    a *= 0.5;
+  }
+  return v;
+}
+float starLayer(vec2 uv, float density, float thr, float sz){
+  vec2 g = uv * density;
+  vec2 id = floor(g);
+  vec2 f = fract(g) - 0.5;
+  float h = hash21(id);
+  float on = step(thr, h);
+  vec2 off = (vec2(hash21(id + 3.1), hash21(id + 7.9)) - 0.5) * 0.72;
+  float d = length(f - off);
+  float tw = 0.55 + 0.45 * sin(uTime * 1.6 + h * 63.0);
+  return on * smoothstep(sz, 0.0, d) * tw;
+}
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+  vec2 par = uMouse * 0.045;
+  float t = uTime * 0.018;
+
+  vec2 q = uv * 1.25 + par;
+  float n1 = fbm(q + vec2(t, -t * 0.6));
+  float n2 = fbm(q * 1.9 - vec2(t * 0.8, t * 0.4) + n1 * 0.8);
+  float neb = pow(clamp(n1 * 0.65 + n2 * 0.55, 0.0, 1.0), 2.1);
+
+  float n3 = pow(fbm(q * 0.7 + 5.3), 3.4);
+  float t2 = pow(n2, 2.6);
+
+  // Bloom sitting behind the core, drifting as the page scrolls.
+  vec2 cc = vec2(uCenter + par.x * 0.5, 0.02 + uScroll * 0.30);
+  float dc = length(uv - cc);
+  float bloomA = exp(-dc * dc * 3.2);
+  float bloomB = exp(-dc * dc * 10.0);
+
+  float vig = smoothstep(1.40, 0.25, length(uv * vec2(0.85, 1.0)));
+
+  /* ---- dark: colour added onto near-black ---- */
+  vec3 dcol = vec3(0.012, 0.015, 0.045);
+  dcol += vec3(0.145, 0.075, 0.42) * neb * 0.95;
+  dcol += vec3(0.050, 0.350, 0.48) * t2 * 0.75;
+  dcol += vec3(0.380, 0.100, 0.30) * n3 * 0.70;
+  dcol += vec3(0.20, 0.16, 0.55) * bloomA * 0.55;
+  dcol += vec3(0.06, 0.30, 0.42) * bloomB * 0.35;
+
+  float s = starLayer(uv + par * 2.0, 12.0, 0.972, 0.055)
+          + starLayer(uv + par * 3.4, 22.0, 0.981, 0.038) * 0.8
+          + starLayer(uv + par * 5.0, 40.0, 0.988, 0.026) * 0.6;
+  dcol += vec3(0.85, 0.92, 1.0) * s;
+  dcol *= 0.32 + 0.68 * vig;
+
+  /* ---- light: the same fields subtracted out of near-white, so the
+     clouds read as pastel tints rather than glow. No stars. ---- */
+  vec3 lcol = vec3(0.965, 0.973, 0.996);
+  lcol -= vec3(0.10, 0.14, 0.01) * neb * 1.15;
+  lcol -= vec3(0.14, 0.05, 0.02) * t2 * 0.95;
+  lcol -= vec3(0.01, 0.10, 0.05) * n3 * 0.90;
+  lcol -= vec3(0.07, 0.09, 0.01) * bloomA * 0.70;
+  lcol -= vec3(0.03, 0.02, 0.00) * bloomB * 0.50;
+  lcol *= 0.965 + 0.035 * vig;
+
+  gl_FragColor = vec4(mix(dcol, lcol, uLight), 1.0);
+}
+`;
+
+const VS_POINTS = `
+precision highp float;
+attribute vec3 aPos;
+attribute float aSeed;
+uniform mat4  uProj;
+uniform mat4  uView;
+uniform float uTime;
+uniform float uSize;
+varying float vDepth;
+varying float vSeed;
+void main(){
+  float pulse = 1.0 + 0.045 * sin(uTime * 1.5 + aSeed * 31.0);
+  vec4 mv = uView * vec4(aPos * pulse, 1.0);
+  gl_Position = uProj * mv;
+  float d = max(-mv.z, 0.05);
+  vDepth = d;
+  vSeed = aSeed;
+  gl_PointSize = (uSize / d) * (0.55 + 0.95 * fract(aSeed * 7.31));
+}
+`;
+
+const FS_POINTS = `
+precision highp float;
+varying float vDepth;
+varying float vSeed;
+uniform vec3  uColA;
+uniform vec3  uColB;
+uniform vec3  uColC;
+uniform float uOpacity;
+uniform float uLight;
+void main(){
+  vec2 p = gl_PointCoord * 2.0 - 1.0;
+  float r2 = dot(p, p);
+  if (r2 > 1.0) discard;
+  float a = exp(-r2 * 3.2);
+
+  float k = fract(vSeed * 3.137);
+  vec3 col = k < 0.5 ? mix(uColA, uColB, k * 2.0) : mix(uColB, uColC, (k - 0.5) * 2.0);
+
+  // Far side of the sphere recedes: darker on black, paler on white.
+  float far = clamp((vDepth - 2.9) / 3.0, 0.0, 1.0);
+  vec3 dcol = col * mix(1.15, 0.30, far);
+  vec3 lcol = mix(col, vec3(0.93, 0.95, 1.0), far * 0.72);
+  col = mix(dcol, lcol, uLight);
+
+  a *= uOpacity * mix(1.0, mix(0.45, 0.55, uLight), far);
+  gl_FragColor = vec4(col * a, a);
+}
+`;
+
+const VS_ARCS = `
+precision highp float;
+attribute vec3 aPos;
+attribute float aT;
+attribute float aSeed;
+uniform mat4 uProj;
+uniform mat4 uView;
+varying float vT;
+varying float vSeed;
+varying float vDepth;
+void main(){
+  vec4 mv = uView * vec4(aPos, 1.0);
+  gl_Position = uProj * mv;
+  vDepth = max(-mv.z, 0.05);
+  vT = aT;
+  vSeed = aSeed;
+}
+`;
+
+const FS_ARCS = `
+precision highp float;
+varying float vT;
+varying float vSeed;
+varying float vDepth;
+uniform float uTime;
+uniform float uOpacity;
+uniform float uLight;
+uniform vec3  uColA;
+uniform vec3  uColB;
+void main(){
+  float head = fract(uTime * 0.19 + vSeed);
+  float d = abs(fract(vT - head + 0.5) - 0.5);
+  float pulse = exp(-d * d * 420.0);
+
+  float far = clamp((vDepth - 2.9) / 3.0, 0.0, 1.0);
+  // Resting lines need more presence on white than they do on black.
+  float base = mix(0.075, 0.21, uLight);
+  float a = (base + pulse * 0.88) * uOpacity * mix(1.0, mix(0.28, 0.42, uLight), far);
+
+  vec3 col = mix(uColA, uColB, fract(vSeed * 5.77));
+  // The pulse head brightens toward white on dark, deepens toward ink on light.
+  vec3 hot = mix(vec3(1.0), vec3(0.05, 0.04, 0.18), uLight);
+  col = mix(col, hot, pulse * 0.55);
+  gl_FragColor = vec4(col * a, a);
+}
+`;
+
+/* ============================================================
+   3. THE SCENE
+   ============================================================ */
+function initScene(canvas) {
+  const gl =
+    canvas.getContext("webgl", { antialias: true, alpha: false, powerPreference: "high-performance" }) ||
+    canvas.getContext("experimental-webgl");
+
+  if (!gl) {
+    // No WebGL: fall back to a static CSS cosmos so the page still reads well.
+    canvas.style.display = "none";
+    document.body.style.background =
+      "radial-gradient(120% 80% at 50% 0%, #1a1140 0%, #0a0b1e 45%, #04050d 100%)";
+    return null;
+  }
+
+  /* ---------- program helpers ---------- */
+  const octaves = DEVICE.tier.octaves;
+
+  function compile(type, src) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      console.error("Shader error:", gl.getShaderInfoLog(sh), src);
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+
+  function program(vsSrc, fsSrc) {
+    const vs = compile(gl.VERTEX_SHADER, vsSrc);
+    const fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+    if (!vs || !fs) return null;
+    const p = gl.createProgram();
+    gl.attachShader(p, vs);
+    gl.attachShader(p, fs);
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+      console.error("Link error:", gl.getProgramInfoLog(p));
+      return null;
+    }
+    // Cache every attribute + uniform location up front.
+    p.at = {};
+    p.un = {};
+    const na = gl.getProgramParameter(p, gl.ACTIVE_ATTRIBUTES);
+    for (let i = 0; i < na; i++) {
+      const n = gl.getActiveAttrib(p, i).name;
+      p.at[n] = gl.getAttribLocation(p, n);
+    }
+    const nu = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+    for (let i = 0; i < nu; i++) {
+      const n = gl.getActiveUniform(p, i).name;
+      p.un[n] = gl.getUniformLocation(p, n);
+    }
+    return p;
+  }
+
+  const progNebula = program(VS_QUAD, FS_NEBULA.replace("OCTAVES", String(octaves)));
+  const progPoints = program(VS_POINTS, FS_POINTS);
+  const progArcs = program(VS_ARCS, FS_ARCS);
+  if (!progNebula || !progPoints || !progArcs) return null;
+
+  const buffer = (data) => {
+    const b = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, b);
+    gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+    return b;
+  };
+
+  /* ---------- geometry ---------- */
+  const quadBuf = buffer(new Float32Array([-1, -1, 3, -1, -1, 3]));
+
+  const R = 1.45;
+  const NODE_COUNT = DEVICE.tier.nodes;
+  const GOLDEN = Math.PI * (3 - Math.sqrt(5));
+
+  const nodes = new Float32Array(NODE_COUNT * 3);
+  const nodeSeeds = new Float32Array(NODE_COUNT);
+  for (let i = 0; i < NODE_COUNT; i++) {
+    const y = 1 - (i / (NODE_COUNT - 1)) * 2;
+    const rad = Math.sqrt(Math.max(0, 1 - y * y));
+    const th = i * GOLDEN;
+    const jitter = 0.985 + Math.random() * 0.035;
+    nodes[i * 3]     = Math.cos(th) * rad * R * jitter;
+    nodes[i * 3 + 1] = y * R * jitter;
+    nodes[i * 3 + 2] = Math.sin(th) * rad * R * jitter;
+    nodeSeeds[i] = Math.random();
+  }
+  const nodeBuf = buffer(nodes);
+  const nodeSeedBuf = buffer(nodeSeeds);
+
+  // Two tilted orbital bands that counter-spin against the globe.
+  const RING_COUNT = DEVICE.tier.rings;
+  const ringPos = new Float32Array(RING_COUNT * 3);
+  const ringSeeds = new Float32Array(RING_COUNT);
+  const radii = [1.86, 2.12, 2.40];
+  const tilts = [0.42, -0.62, 0.18];
+  for (let i = 0; i < RING_COUNT; i++) {
+    const band = i % radii.length;
+    const rr = radii[band] + (Math.random() - 0.5) * 0.075;
+    const a = Math.random() * Math.PI * 2;
+    let x = Math.cos(a) * rr;
+    let y = (Math.random() - 0.5) * 0.035;
+    let z = Math.sin(a) * rr;
+    const c = Math.cos(tilts[band]), s = Math.sin(tilts[band]);
+    const y2 = y * c - z * s;
+    const z2 = y * s + z * c;
+    ringPos[i * 3] = x; ringPos[i * 3 + 1] = y2; ringPos[i * 3 + 2] = z2;
+    ringSeeds[i] = Math.random();
+  }
+  const ringBuf = buffer(ringPos);
+  const ringSeedBuf = buffer(ringSeeds);
+
+  // Great-circle arcs between node pairs, bulging outward.
+  const ARC_COUNT = DEVICE.tier.arcs;
+  const SAMPLES = 26;
+  const arcVerts = [];
+  const arcTs = [];
+  const arcSeeds = [];
+  const pick = () => {
+    const i = (Math.random() * NODE_COUNT) | 0;
+    return [nodes[i * 3] / R, nodes[i * 3 + 1] / R, nodes[i * 3 + 2] / R];
+  };
+  for (let a = 0; a < ARC_COUNT; a++) {
+    let p1, p2, dot;
+    let guard = 0;
+    do {
+      p1 = pick(); p2 = pick();
+      dot = p1[0] * p2[0] + p1[1] * p2[1] + p1[2] * p2[2];
+    } while ((dot > 0.72 || dot < -0.25) && ++guard < 40);
+
+    const seed = Math.random();
+    const pts = [];
+    for (let k = 0; k < SAMPLES; k++) {
+      const t = k / (SAMPLES - 1);
+      let x = lerp(p1[0], p2[0], t);
+      let y = lerp(p1[1], p2[1], t);
+      let z = lerp(p1[2], p2[2], t);
+      const len = Math.hypot(x, y, z) || 1;
+      const bulge = R * (1 + 0.24 * Math.sin(Math.PI * t));
+      pts.push([(x / len) * bulge, (y / len) * bulge, (z / len) * bulge, t]);
+    }
+    // Expand into GL_LINES pairs.
+    for (let k = 0; k < SAMPLES - 1; k++) {
+      for (const q of [pts[k], pts[k + 1]]) {
+        arcVerts.push(q[0], q[1], q[2]);
+        arcTs.push(q[3]);
+        arcSeeds.push(seed);
+      }
+    }
+  }
+  const arcBuf = buffer(new Float32Array(arcVerts));
+  const arcTBuf = buffer(new Float32Array(arcTs));
+  const arcSeedBuf = buffer(new Float32Array(arcSeeds));
+  const arcVertCount = arcTs.length;
+
+  /* ---------- state ---------- */
+  const proj = m4.create();
+  const view = m4.create();
+  const tmpA = m4.create();
+  const tmpB = m4.create();
+  const tmpC = m4.create();
+
+  const state = {
+    rotY: 0.0, rotX: -0.22,
+    velY: 0.0, velX: 0.0,
+    dragging: false,
+    lastX: 0, lastY: 0,
+    ringSpin: 0,
+    mouseX: 0, mouseY: 0,
+    tMouseX: 0, tMouseY: 0,
+    scroll: 0,
+    dpr: 1,
+    dprCap: DEVICE.tier.dpr,
+    dprPenalty: 0,
+    touch: false,
+    w: 0, h: 0,
+    centerX: 0,
+  };
+
+  function resize() {
+    // Re-classify: a rotation or window resize can change the bucket.
+    const cls = classifyDevice();
+    if (cls !== DEVICE.class) {
+      DEVICE.class = cls;
+      document.documentElement.setAttribute("data-device", cls);
+      // Keep the existing geometry, but adopt the new pixel-ratio cap.
+      if (!state.dprPenalty) state.dprCap = TIERS[cls].dpr;
+    }
+    state.dpr = Math.min(window.devicePixelRatio || 1, state.dprCap);
+    state.w = Math.round(window.innerWidth * state.dpr);
+    state.h = Math.round(window.innerHeight * state.dpr);
+    canvas.width = state.w;
+    canvas.height = state.h;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    // Push the core off-centre on wide screens so it clears the headline.
+    state.centerX = window.innerWidth > 900 ? 0.30 : 0.0;
+  }
+  resize();
+
+  /* ---------- draw ---------- */
+  function bindAttr(prog, name, buf, size) {
+    const loc = prog.at[name];
+    if (loc === undefined || loc < 0) return;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
+  }
+
+  function render(time) {
+    const t = time * 0.001;
+
+    gl.viewport(0, 0, state.w, state.h);
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.BLEND);
+
+    /* --- nebula --- */
+    gl.useProgram(progNebula);
+    bindAttr(progNebula, "aPos", quadBuf, 2);
+    gl.uniform2f(progNebula.un.uRes, state.w, state.h);
+    gl.uniform1f(progNebula.un.uTime, t);
+    gl.uniform2f(progNebula.un.uMouse, state.mouseX, state.mouseY);
+    gl.uniform1f(progNebula.un.uScroll, state.scroll);
+    gl.uniform1f(progNebula.un.uCenter, state.centerX * 1.55);
+    gl.uniform1f(progNebula.un.uLight, THEME.light);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    /* --- camera --- */
+    const aspect = state.w / state.h;
+    const heroP = clamp(state.scroll, 0, 1);
+    const globeScale = 1 - 0.50 * heroP;
+    const offX = state.centerX * 2.5 + heroP * 0.55;
+    const offY = heroP * 0.30;
+    const opacity = 1 - 0.78 * heroP;
+
+    m4.perspective(proj, (46 * Math.PI) / 180, aspect, 0.1, 60);
+
+    // view = T(camera) · T(offset) · Rx · Ry · S
+    m4.translation(view, 0, 0, -4.7);
+    m4.translation(tmpA, offX + state.mouseX * 0.13, offY - state.mouseY * 0.10, 0);
+    m4.multiply(view, view, tmpA);
+    m4.rotationX(tmpA, state.rotX + state.mouseY * 0.10);
+    m4.multiply(view, view, tmpA);
+    m4.rotationY(tmpB, state.rotY);
+    m4.multiply(view, view, tmpB);
+    m4.scaling(tmpC, globeScale);
+    m4.multiply(view, view, tmpC);
+
+    gl.enable(gl.BLEND);
+    // Shaders emit premultiplied alpha. On black, adding light is right;
+    // on white, adding light is invisible, so composite source-over instead.
+    if (THEME.light) gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    else gl.blendFunc(gl.ONE, gl.ONE);
+
+    const pal = PAL();
+
+    /* --- arcs --- */
+    if (opacity > 0.02) {
+      gl.useProgram(progArcs);
+      bindAttr(progArcs, "aPos", arcBuf, 3);
+      bindAttr(progArcs, "aT", arcTBuf, 1);
+      bindAttr(progArcs, "aSeed", arcSeedBuf, 1);
+      gl.uniformMatrix4fv(progArcs.un.uProj, false, proj);
+      gl.uniformMatrix4fv(progArcs.un.uView, false, view);
+      gl.uniform1f(progArcs.un.uTime, t);
+      gl.uniform1f(progArcs.un.uOpacity, opacity);
+      gl.uniform1f(progArcs.un.uLight, THEME.light);
+      gl.uniform3fv(progArcs.un.uColA, pal.arc.a);
+      gl.uniform3fv(progArcs.un.uColB, pal.arc.b);
+      gl.drawArrays(gl.LINES, 0, arcVertCount);
+
+      /* --- globe nodes --- */
+      gl.useProgram(progPoints);
+      bindAttr(progPoints, "aPos", nodeBuf, 3);
+      bindAttr(progPoints, "aSeed", nodeSeedBuf, 1);
+      gl.uniformMatrix4fv(progPoints.un.uProj, false, proj);
+      gl.uniformMatrix4fv(progPoints.un.uView, false, view);
+      gl.uniform1f(progPoints.un.uTime, t);
+      // Dots need slightly more mass to hold their own against white.
+      const dotSize = 13.0 * (THEME.light ? 1.14 : 1.0);
+      gl.uniform1f(progPoints.un.uSize, dotSize * state.dpr * globeScale);
+      gl.uniform1f(progPoints.un.uOpacity, opacity);
+      gl.uniform1f(progPoints.un.uLight, THEME.light);
+      gl.uniform3fv(progPoints.un.uColA, pal.core.a);
+      gl.uniform3fv(progPoints.un.uColB, pal.core.b);
+      gl.uniform3fv(progPoints.un.uColC, pal.core.c);
+      gl.drawArrays(gl.POINTS, 0, NODE_COUNT);
+
+      /* --- counter-spinning rings --- */
+      m4.rotationY(tmpA, -state.ringSpin);
+      m4.multiply(tmpB, view, tmpA);
+      gl.uniformMatrix4fv(progPoints.un.uView, false, tmpB);
+      gl.uniform1f(progPoints.un.uSize, 9.5 * (THEME.light ? 1.14 : 1.0) * state.dpr * globeScale);
+      gl.uniform1f(progPoints.un.uOpacity, opacity * 0.75);
+      bindAttr(progPoints, "aPos", ringBuf, 3);
+      bindAttr(progPoints, "aSeed", ringSeedBuf, 1);
+      gl.drawArrays(gl.POINTS, 0, RING_COUNT);
+    }
+  }
+
+  /* ---------- animation loop ---------- */
+  let raf = null;
+  let running = true;
+
+  /* The tier is an educated guess; this is the measurement. If frames
+     are consistently slow, shed resolution rather than drop frames.
+     One-way only — stepping back up would oscillate. */
+  const perf = { last: 0, acc: 0, n: 0 };
+  function watchPerformance(time) {
+    if (perf.last) {
+      perf.acc += time - perf.last;
+      perf.n++;
+    }
+    perf.last = time;
+    if (perf.n < 120) return;
+
+    const avg = perf.acc / perf.n;
+    perf.acc = 0;
+    perf.n = 0;
+    if (avg > 22 && state.dprPenalty < 2) {   // slower than ~45fps
+      state.dprPenalty++;
+      state.dprCap = Math.max(0.85, state.dprCap * 0.78);
+      resize();
+    }
+  }
+
+  function frame(time) {
+    if (!running) return;
+    watchPerformance(time);
+
+    // Idle spin, plus whatever momentum the pointer left behind.
+    state.rotY += (REDUCED ? 0 : 0.0016) + state.velY;
+    state.rotX = clamp(state.rotX + state.velX, -0.85, 0.85);
+    state.velY *= 0.94;
+    state.velX *= 0.94;
+    state.ringSpin += REDUCED ? 0 : 0.0009;
+
+    state.mouseX = lerp(state.mouseX, state.tMouseX, 0.05);
+    state.mouseY = lerp(state.mouseY, state.tMouseY, 0.05);
+
+    render(time);
+    raf = requestAnimationFrame(frame);
+  }
+
+  /* ---------- input ---------- */
+  const INTERACTIVE =
+    "a, button, input, textarea, select, label, form, [data-tilt], .card, canvas#neural";
+
+  function onDown(e) {
+    // Only grab the core in the hero region, and never over real controls.
+    if (window.scrollY > window.innerHeight * 0.92) return;
+    if (e.target.closest && e.target.closest(INTERACTIVE)) return;
+    state.dragging = true;
+    state.touch = e.pointerType === "touch";
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+  }
+
+  function onMove(e) {
+    const nx = (e.clientX / window.innerWidth) * 2 - 1;
+    const ny = (e.clientY / window.innerHeight) * 2 - 1;
+    state.tMouseX = nx;
+    state.tMouseY = ny;
+
+    if (!state.dragging) return;
+    const dx = e.clientX - state.lastX;
+    const dy = e.clientY - state.lastY;
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
+    state.velY += dx * 0.00022;
+    // Vertical drag is reserved for scrolling on touch devices.
+    if (!state.touch) state.velX += dy * 0.00018;
+  }
+
+  const onUp = () => { state.dragging = false; };
+
+  window.addEventListener("pointerdown", onDown, { passive: true });
+  window.addEventListener("pointermove", onMove, { passive: true });
+  window.addEventListener("pointerup", onUp, { passive: true });
+  window.addEventListener("pointercancel", onUp, { passive: true });
+
+  window.addEventListener("resize", resize);
+  window.addEventListener("orientationchange", resize);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      running = false;
+      if (raf) cancelAnimationFrame(raf);
+    } else if (!running) {
+      running = true;
+      perf.last = 0;          // a hidden-tab gap is not a slow frame
+      perf.acc = 0;
+      perf.n = 0;
+      raf = requestAnimationFrame(frame);
+    }
+  });
+
+  canvas.addEventListener("webglcontextlost", (e) => {
+    e.preventDefault();
+    running = false;
+  });
+
+  return {
+    start() { raf = requestAnimationFrame(frame); },
+    setScroll(v) { state.scroll = v; },
+  };
+}
+
+/* ============================================================
+   4. NEURAL DIAGRAM (2D)
+   ============================================================ */
+function initNeural(canvas) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const LAYERS = [4, 6, 6, 3];
+  let nodes = [];
+  let edges = [];
+  let pulses = [];
+  let w = 0, h = 0, dpr = 1;
+  let hover = -1;
+  const mouse = { x: -999, y: -999 };
+
+  function layout() {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = rect.width;
+    h = rect.height;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    nodes = [];
+    const padX = w * 0.16;
+    const usableW = w - padX * 2;
+    LAYERS.forEach((count, li) => {
+      const x = padX + (usableW * li) / (LAYERS.length - 1);
+      const spread = Math.min(h * 0.72, count * 46);
+      for (let i = 0; i < count; i++) {
+        const y = h / 2 + (count === 1 ? 0 : (i / (count - 1) - 0.5) * spread);
+        nodes.push({ x, y, li, r: li === 0 || li === LAYERS.length - 1 ? 6 : 5, phase: Math.random() * 6.28, act: 0 });
+      }
+    });
+
+    edges = [];
+    for (let li = 0; li < LAYERS.length - 1; li++) {
+      const from = nodes.filter((n) => n.li === li);
+      const to = nodes.filter((n) => n.li === li + 1);
+      from.forEach((a) => to.forEach((b) => edges.push({ a, b, wgt: 0.25 + Math.random() * 0.75 })));
+    }
+    pulses = [];
+  }
+
+  function spawn() {
+    if (pulses.length > 26) return;
+    const e = edges[(Math.random() * edges.length) | 0];
+    pulses.push({ e, t: 0, sp: 0.010 + Math.random() * 0.016 });
+  }
+
+  function draw(time) {
+    const t = time * 0.001;
+    const P = PAL();
+    ctx.clearRect(0, 0, w, h);
+
+    // Nearest node to the cursor lights up its whole neighbourhood.
+    hover = -1;
+    let best = 34 * 34;
+    nodes.forEach((n, i) => {
+      const d = (n.x - mouse.x) ** 2 + (n.y - mouse.y) ** 2;
+      if (d < best) { best = d; hover = i; }
+    });
+    const hn = hover >= 0 ? nodes[hover] : null;
+
+    // edges
+    edges.forEach((e) => {
+      const lit = hn && (e.a === hn || e.b === hn);
+      ctx.beginPath();
+      ctx.moveTo(e.a.x, e.a.y);
+      ctx.lineTo(e.b.x, e.b.y);
+      ctx.strokeStyle = lit ? P.edgeLit : P.edge(0.05 + e.wgt * 0.055);
+      ctx.lineWidth = lit ? 1.4 : 0.8;
+      ctx.stroke();
+    });
+
+    // travelling pulses
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      const p = pulses[i];
+      p.t += p.sp;
+      if (p.t >= 1) { p.e.b.act = 1; pulses.splice(i, 1); continue; }
+      const x = lerp(p.e.a.x, p.e.b.x, p.t);
+      const y = lerp(p.e.a.y, p.e.b.y, p.t);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 9);
+      g.addColorStop(0, P.pulseCore);
+      g.addColorStop(1, P.pulseEdge);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, 9, 0, 6.2832);
+      ctx.fill();
+    }
+
+    // nodes
+    nodes.forEach((n, i) => {
+      n.act *= 0.94;
+      const bob = Math.sin(t * 1.3 + n.phase) * 2.2;
+      const y = n.y + bob;
+      const isHot = i === hover;
+      const glow = 0.35 + n.act * 0.65 + (isHot ? 0.5 : 0);
+      const rad = n.r + n.act * 2.5 + (isHot ? 2.5 : 0);
+      const col = P.nodes[n.li];
+
+      const g = ctx.createRadialGradient(n.x, y, 0, n.x, y, rad * 4.2);
+      g.addColorStop(0, col);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.globalAlpha = glow * 0.55;
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(n.x, y, rad * 4.2, 0, 6.2832);
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(n.x, y, rad, 0, 6.2832);
+      ctx.fill();
+
+      ctx.strokeStyle = P.nodeRing;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(n.x, y, rad, 0, 6.2832);
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  let raf, visible = false, spawnTimer = 0;
+  function loop(time) {
+    if (!visible) return;
+    if (!REDUCED && time - spawnTimer > 110) { spawn(); spawnTimer = time; }
+    draw(time);
+    raf = requestAnimationFrame(loop);
+  }
+
+  layout();
+  draw(0);
+  // Repaint immediately on theme change, even while paused offscreen.
+  themeListeners.push(() => draw(performance.now()));
+  window.addEventListener("resize", () => { layout(); draw(performance.now()); });
+
+  canvas.addEventListener("pointermove", (e) => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  canvas.addEventListener("pointerleave", () => { mouse.x = mouse.y = -999; });
+
+  new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      visible = en.isIntersecting;
+      if (visible) { spawnTimer = performance.now(); raf = requestAnimationFrame(loop); }
+      else if (raf) cancelAnimationFrame(raf);
+    });
+  }, { threshold: 0.05 }).observe(canvas);
+}
+
+/* ============================================================
+   5. CONSTELLATION (2D)
+   ============================================================ */
+function initConstellation(canvas) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let w = 0, h = 0, dpr = 1, pts = [], raf, visible = false;
+  const mouse = { x: -999, y: -999 };
+  const LINK = 128;
+
+  function layout() {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+    w = rect.width; h = rect.height;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const density = COARSE ? 14000 : 9000;
+    const n = clamp(Math.round((w * h) / density), 24, 110);
+    pts = Array.from({ length: n }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      r: 0.8 + Math.random() * 1.5,
+    }));
+  }
+
+  function draw() {
+    const P = PAL();
+    ctx.clearRect(0, 0, w, h);
+
+    for (const p of pts) {
+      if (!REDUCED) { p.x += p.vx; p.y += p.vy; }
+      if (p.x < -20) p.x = w + 20; else if (p.x > w + 20) p.x = -20;
+      if (p.y < -20) p.y = h + 20; else if (p.y > h + 20) p.y = -20;
+    }
+
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 > LINK * LINK) continue;
+        const alpha = (1 - Math.sqrt(d2) / LINK) * 0.22;
+        ctx.strokeStyle = P.link(alpha);
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+
+      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (md < 170) {
+        ctx.strokeStyle = P.linkMouse((1 - md / 170) * 0.34);
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = P.dot(md < 170 ? 0.8 : 0.45);
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, 6.2832);
+      ctx.fill();
+    }
+  }
+
+  function loop() {
+    if (!visible) return;
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+
+  layout();
+  draw();
+  themeListeners.push(draw);
+  window.addEventListener("resize", () => { layout(); draw(); });
+
+  window.addEventListener("pointermove", (e) => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  }, { passive: true });
+
+  new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      visible = en.isIntersecting;
+      if (visible) raf = requestAnimationFrame(loop);
+      else if (raf) cancelAnimationFrame(raf);
+    });
+  }, { threshold: 0 }).observe(canvas);
+}
+
+/* ============================================================
+   6. UI BEHAVIOURS
+   ============================================================ */
+function initReveals() {
+  const items = document.querySelectorAll(".reveal");
+  items.forEach((el) => el.style.setProperty("--d", el.dataset.d || 0));
+
+  if (REDUCED || !("IntersectionObserver" in window)) {
+    items.forEach((el) => el.classList.add("is-in"));
+    document.querySelectorAll(".step").forEach((s) => s.classList.add("is-in"));
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("is-in");
+        io.unobserve(en.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+  items.forEach((el) => io.observe(el));
+}
+
+/* ------------------------------------------------------------
+   Application form.
+
+   Posts to a Google Apps Script Web App, which appends the row to a
+   Google Sheet and emails the applicant a confirmation. The field
+   names and the attachment_* payload below are the contract with that
+   script — renaming any of them breaks the automation.
+   ------------------------------------------------------------ */
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwUUUTX9Qs9qSom7C1f19y3wg5khzjteJFt0bh0ViONtgD53rkv00qeUG64xYOCEK4P/exec";
+
+function initApplyForm() {
+  const form = document.getElementById("apply-form");
+  const status = document.getElementById("apply-form-status");
+  const fileInput = document.getElementById("file-input");
+  const filePreview = document.getElementById("file-preview");
+  const overlay = document.getElementById("thankyou-overlay");
+  const closeBtn = document.getElementById("thankyou-close");
+  if (!form || !status || !fileInput || !filePreview) return;
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function setStatus(text, state) {
+    status.textContent = text;
+    status.setAttribute("data-state", state || "");
+  }
+
+  /* ---- thank-you modal ---- */
+  let lastFocus = null;
+
+  function openThankyou() {
+    if (!overlay) return;
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.classList.add("open"));
+    document.body.style.overflow = "hidden";
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeThankyou() {
+    if (!overlay) return;
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    setTimeout(() => { overlay.hidden = true; }, 250);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  if (closeBtn) closeBtn.addEventListener("click", closeThankyou);
+  if (overlay) {
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeThankyou(); });
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && overlay && !overlay.hidden) closeThankyou();
+  });
+
+  /* ---- file preview ---- */
+  let previewUrl = null;
+  fileInput.addEventListener("change", function () {
+    filePreview.innerHTML = "";
+    if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+
+    const file = this.files[0];
+    if (!file) return;
+
+    const card = document.createElement("div");
+    card.className = "file-card";
+
+    let left;
+    if (file.type.indexOf("image/") === 0) {
+      left = document.createElement("img");
+      left.className = "file-thumb";
+      left.alt = "";
+      previewUrl = URL.createObjectURL(file);
+      left.src = previewUrl;
+    } else {
+      left = document.createElement("div");
+      left.className = "file-icon";
+      left.textContent = "📄";
+    }
+
+    const info = document.createElement("div");
+    info.className = "file-info";
+    const h4 = document.createElement("h4");
+    h4.textContent = file.name;
+    const p = document.createElement("p");
+    p.textContent = (file.size / 1024).toFixed(1) + " KB";
+    info.appendChild(h4);
+    info.appendChild(p);
+
+    card.appendChild(left);
+    card.appendChild(info);
+    filePreview.appendChild(card);
+    setStatus("");
+  });
+
+  /* ---- validation ----
+     Done here rather than natively: the file input is visually hidden,
+     and browsers refuse to submit a form with a required control they
+     cannot focus to show a bubble on. */
+  function firstProblem() {
+    const required = [
+      ["name", "Please enter your full name."],
+      ["age", "Please enter your age."],
+      ["email", "Please enter your email address."],
+      ["phone", "Please enter your phone number."],
+    ];
+    for (const [nm, msg] of required) {
+      const el = form.elements[nm];
+      if (!el || !el.value.trim()) return { el, msg };
+    }
+    const email = form.elements.email;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      return { el: email, msg: "That email address doesn't look right." };
+    }
+    const age = Number(form.elements.age.value);
+    if (!Number.isFinite(age) || age < 1 || age > 120) {
+      return { el: form.elements.age, msg: "Please enter a valid age." };
+    }
+    if (!fileInput.files[0]) {
+      return { el: null, msg: "Please attach your picture." };
+    }
+    return null;
+  }
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const problem = firstProblem();
+    if (problem) {
+      setStatus(problem.msg, "error");
+      if (problem.el && problem.el.focus) problem.el.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    setStatus("Sending…");
+
+    const file = fileInput.files[0];
+    const encodeStep = file ? fileToBase64(file) : Promise.resolve(null);
+
+    encodeStep
+      .then((base64) => {
+        const formData = new FormData(form);
+        formData.delete("attachment");
+        if (base64) {
+          formData.append("attachment_base64", base64);
+          formData.append("attachment_name", file.name);
+          formData.append("attachment_type", file.type || "application/octet-stream");
+        }
+        return fetch(SCRIPT_URL, { method: "POST", body: formData });
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result === "success") {
+          setStatus("");
+          form.reset();
+          filePreview.innerHTML = "";
+          if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+          openThankyou();
+        } else {
+          setStatus(data.message || "Something went wrong. Please try again.", "error");
+        }
+      })
+      .catch(() => setStatus("Something went wrong. Please try again.", "error"))
+      .finally(() => { submitBtn.disabled = false; });
+  });
+}
+
+function initTilt() {
+  if (COARSE || REDUCED) return;
+  document.querySelectorAll("[data-tilt]").forEach((card) => {
+    let rect = null;
+    const enter = () => { rect = card.getBoundingClientRect(); };
+    const move = (e) => {
+      if (!rect) rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      card.style.transform =
+        `perspective(1000px) rotateY(${(px - 0.5) * 11}deg) rotateX(${(0.5 - py) * 11}deg) translateY(-6px)`;
+      card.style.setProperty("--mx", px * 100 + "%");
+      card.style.setProperty("--my", py * 100 + "%");
+    };
+    const leave = () => {
+      rect = null;
+      card.style.transform = "";
+    };
+    card.addEventListener("pointerenter", enter);
+    card.addEventListener("pointermove", move);
+    card.addEventListener("pointerleave", leave);
+  });
+}
+
+function initCursor() {
+  if (COARSE || REDUCED) return;
+  const el = document.getElementById("cursor");
+  if (!el) return;
+  let x = window.innerWidth / 2, y = window.innerHeight / 2;
+  let tx = x, ty = y;
+
+  window.addEventListener("pointermove", (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+  document.addEventListener("pointerover", (e) => {
+    const hot = e.target.closest && e.target.closest("a, button, [data-tilt], canvas#neural");
+    el.classList.toggle("is-hot", !!hot);
+  });
+
+  (function tick() {
+    x = lerp(x, tx, 0.18);
+    y = lerp(y, ty, 0.18);
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    requestAnimationFrame(tick);
+  })();
+}
+
+function initMagnetic() {
+  if (COARSE || REDUCED) return;
+  document.querySelectorAll("[data-magnetic]").forEach((el) => {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.3}px)`;
+    });
+    el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+  });
+}
+
+function initNav(scene) {
+  const nav = document.getElementById("nav");
+  const links = document.getElementById("navLinks");
+  const burger = document.getElementById("burger");
+  const fill = document.getElementById("scrollFill");
+  const hero = document.getElementById("hero");
+
+  burger.addEventListener("click", () => {
+    const open = links.classList.toggle("is-open");
+    burger.setAttribute("aria-expanded", String(open));
+  });
+  links.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      links.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+    })
+  );
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      nav.classList.toggle("is-stuck", y > 40);
+
+      const doc = document.documentElement.scrollHeight - window.innerHeight;
+      fill.style.width = (doc > 0 ? (y / doc) * 100 : 0) + "%";
+
+      if (scene) {
+        const hh = hero ? hero.offsetHeight : window.innerHeight;
+        scene.setScroll(clamp(y / Math.max(hh, 1), 0, 1));
+      }
+      ticking = false;
+    });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Highlight whichever section owns the viewport.
+  const sections = [...document.querySelectorAll("main section[id]")];
+  const map = new Map(
+    [...links.querySelectorAll("a")].map((a) => [a.getAttribute("href").slice(1), a])
+  );
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const a = map.get(en.target.id);
+          if (!a) return;
+          map.forEach((x) => x.classList.remove("is-active"));
+          a.classList.add("is-active");
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+}
+
+function initPreloader() {
+  const pre = document.getElementById("preloader");
+  const fillEl = document.getElementById("preloaderFill");
+  const pct = document.getElementById("preloaderPct");
+  if (!pre) return;
+
+  let p = 0;
+  let done = false;
+  const timer = setInterval(() => {
+    p = Math.min(p + Math.random() * 16, done ? 100 : 92);
+    fillEl.style.width = p + "%";
+    pct.textContent = Math.round(p);
+    if (p >= 100) {
+      clearInterval(timer);
+      pre.classList.add("is-done");
+      setTimeout(() => pre.remove(), 800);
+    }
+  }, 110);
+
+  const finish = () => { done = true; };
+  const ready = document.fonts ? document.fonts.ready.catch(() => {}) : Promise.resolve();
+  Promise.race([ready, new Promise((r) => setTimeout(r, 2200))]).then(() => setTimeout(finish, 220));
+  window.addEventListener("load", finish);
+}
+
+/* ============================================================
+   7. BOOT
+   ============================================================ */
+function boot() {
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  const hint = document.querySelector(".hero__hint span");
+  if (hint && DEVICE.touch) hint.textContent = "swipe to spin";
+
+  initTheme();
+
+  const scene = initScene(document.getElementById("scene"));
+  if (scene) scene.start();
+
+  const neural = document.getElementById("neural");
+  if (neural) initNeural(neural);
+
+  const constellation = document.getElementById("constellation");
+  if (constellation) initConstellation(constellation);
+
+  initReveals();
+  initApplyForm();
+  initTilt();
+  initCursor();
+  initMagnetic();
+  initNav(scene);
+  initPreloader();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}
+
+</script>
+</body>
+</html>
